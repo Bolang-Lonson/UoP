@@ -7,7 +7,7 @@ def display_left(name, n):
     # checking if n is a number
     if not isinstance(n, int):
         raise TypeError('n must be an integer')
-    else:
+    elif n in range(0, len(name)):
         # printing sliced substring
         print(name[:n])
 
@@ -33,5 +33,5 @@ def reverse(name):
 
 
 print(reverse('Saadiq'))
-display_left('Lonson', 3)
+display_left('Lonson', int(input('End index: ')))
 print(vowel_count('Bolang-Lonson'))
