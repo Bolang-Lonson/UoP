@@ -29,3 +29,15 @@ for i in range(len(salaryList)):
 # Sort the SalaryList and show top 3 salaries.
 salaryList.sort(reverse=True)
 print(salaryList[:3])
+
+# Part B
+'''Design a program such that it converts a sentence into wordlist. Reverse the wordlist then.'''
+sentence = 'The quick brown fox jumped over the lazy dog'
+
+# converting into wordlist using split() method
+wordList = sentence.split(' ')
+# separating with an empty space as words in english are also separated by empty spaces when used in a sentence.
+print(wordList)
+# reversing wordlist with the reverse() method
+wordList.reverse()
+print(wordList)
