@@ -1,4 +1,3 @@
-from genericpath import isfile
 import os
 
 cwd = os.getcwd() + '/'
@@ -17,7 +16,7 @@ print(os.path.isfile(cwd))  #   False
 print(os.listdir(cwd))  #   returns a list of strings of all files and subdirs
 
 for item in os.listdir(cwd):
-    if item.endswith('py'):
+    if item.endswith('.py'):
         # printing all py files
         print(item)
 
