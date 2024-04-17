@@ -1,6 +1,7 @@
 *.pdf
 *.docx
 *.txt
-
+*.class
+*.ods
 .vscode/
 .DS_Store
