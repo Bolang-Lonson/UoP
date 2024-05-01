@@ -20,8 +20,8 @@ public class Assignment1 {
         
         System.out.println("******Quiz Game*****");
         System.out.println("Start? y/n");
-        char resp = TextIO.getlnChar();
-        if (resp == 'n'){
+        Boolean resp = TextIO.getlnBoolean();
+        if (!resp){
             // Program execution would end here 
             System.out.println("Ending Program...");
             return;
