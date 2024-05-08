@@ -158,7 +158,7 @@ class StudentManagement {
                     viewStudentDetails(id);
                 }
                 case 4 -> {
-
+                    viewAll();
                 }
                 case 5 -> {
                     System.out.println("Exiting program!...");
@@ -167,7 +167,7 @@ class StudentManagement {
                     System.out.println("Invalid Choice.");
                 }
             }
-        } while (choice != 4);
+        } while (choice != 5);
     }
 }
 
