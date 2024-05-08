@@ -62,6 +62,15 @@ class StudentManagement {
         System.out.printf("%s\t\t%s\t\t\t%d\t\t\t%s\n", stdnt.getName(), stdnt.getId(), stdnt.getAge(), stdnt.getGrade());
     }
 
+    public void viewAll() {
+        System.out.println("\nName\t\t\t\t\tID\t\t\tAge\t\t\tGrade");
+        System.out.println("--------------------------------------------------------------------------------------------------------");
+        // Printing out the student list
+        for(Student student: studentList) {
+            System.out.printf("%s\t\t%s\t\t\t%d\t\t\t%s\n", student.getName(), student.getId(), student.getAge(), student.getGrade());
+        }
+    }
+
     public void updateStudent(String id) {
         Student student = findStudent(id);
         System.out.println("\nWhat detail do you want to update?");
@@ -105,9 +114,8 @@ class StudentManagement {
         for (Student student: studentList){
             if (student.getId().equals(id))
                 return student;
-            else
-                System.out.println("Student ID not found");
         }
+        System.out.println("Student ID not found");
         return null;
     }
 
@@ -115,11 +123,12 @@ class StudentManagement {
         int choice;
 
         do {
-            System.out.println("Welcome to Student Record Management System!");
+            System.out.println("\nWelcome to Student Record Management System!");
             System.out.println("1. Add New Student");
             System.out.println("2. Update Student Information");
             System.out.println("3. View Student Details");
-            System.out.println("4. Exit");
+            System.out.println("4. View Student List");
+            System.out.println("5. Exit");
       
             System.out.print("Enter your choice: ");
             
@@ -149,6 +158,9 @@ class StudentManagement {
                     viewStudentDetails(id);
                 }
                 case 4 -> {
+
+                }
+                case 5 -> {
                     System.out.println("Exiting program!...");
                 }
                 default -> {
