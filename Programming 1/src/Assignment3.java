@@ -67,7 +67,7 @@ class StudentManagement {
         System.out.println("--------------------------------------------------------------------------------------------------------");
         // Printing out the student list
         for(Student student: studentList) {
-            System.out.printf("%s\t\t%s\t\t\t%d\t\t\t%s\n", student.getName(), student.getId(), student.getAge(), student.getGrade());
+            System.out.printf("%s\t\t%s\t\t\t%d\t\t\t%s%n", student.getName(), student.getId(), student.getAge(), student.getGrade());
         }
     }
 
@@ -123,7 +123,7 @@ class StudentManagement {
         int choice;
 
         do {
-            System.out.println("\nWelcome to Student Record Management System!");
+            System.out.println("Welcome to Student Record Management System!");
             System.out.println("1. Add New Student");
             System.out.println("2. Update Student Information");
             System.out.println("3. View Student Details");
