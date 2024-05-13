@@ -6,11 +6,12 @@ import textio.TextIO;
   */
 public class Assignment5 {
     public static void main(String[] args) {
-        CourseManagement.start();
+        CourseManagement.AdminInterface();
     }
 }
 
 /**
+ * Student Class: Stores student information and provides methods to enroll in courses and assign grades.
  * Student class can be used to create Student objects with various attributes
  * @params: name, id
   */
@@ -63,6 +64,9 @@ class Student {
     }
 }
 
+/**
+ * Course Class: Stores course information and tracks total enrolled students using a static variable.
+ */
 class Course {
     private String code, name;
     private int maxCapacity;
@@ -100,6 +104,9 @@ class Course {
     }
 }
 
+/**
+ * CourseManagement Class: Manages courses, student enrollment, grades, and overall grade calculations. Utilizes static methods and variables to maintain centralized information.
+ */
 class CourseManagement {
     private static ArrayList<Course> courses = new ArrayList<Course>();
     private static HashMap<Student, HashMap<Course, String>> studentGrades = new HashMap<>();
@@ -135,7 +142,10 @@ class CourseManagement {
         }
     }
 
-    public static void start(){
+    /**
+     * Administrator Interface: Provides a menu-driven interface for
+     */
+    public static void AdminInterface(){
         int option;
 
         do {
