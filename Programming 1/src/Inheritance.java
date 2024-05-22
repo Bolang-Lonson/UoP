@@ -53,3 +53,4 @@ class Motorcycle extends Vehicle {
 }
 
 class Person {}
+// Polymorphism just means that different objects can respond to the same message in different ways.
