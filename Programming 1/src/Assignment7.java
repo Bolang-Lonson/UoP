@@ -412,7 +412,7 @@ class CourseEnrollmentTab extends Tab {
         // For example, if enrollmentTable is a TableView<Student>, you might do something like this:
         enrollmentTable.setItems(course.getEnrolledStudents());
     }
-    
+
     private void showEnrollStudentDialog() {
         Course selectedCourse = courseTable.getSelectionModel().getSelectedItem();
         if (selectedCourse == null) {
@@ -521,9 +521,9 @@ class GradeManagementTab extends Tab {
 
     private void loadSampleData() {
         studentData.addAll(
-                new Student(1, "John Doe", 0, ""),
-                new Student(2, "Jane Smith", 0, ""),
-                new Student(3, "Alice Johnson", 0, "")
+                new Student("1", "John Doe", 0, ""),
+                new Student("2", "Jane Smith", 0, ""),
+                new Student("3", "Alice Johnson", 0, "")
         );
 
         courseData.addAll(
