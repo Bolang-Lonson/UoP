@@ -113,7 +113,6 @@ class Course {
     // Other methods for managing courses, such as removing students or updating details, can be added here
 }
 
-
 class StudentManagementTab extends Tab {
 
     private TableView<Student> studentTable;
@@ -400,6 +399,20 @@ class CourseEnrollmentTab extends Tab {
         );
     }
 
+    private void showAlert(String title, String content) {
+        Alert alert = new Alert(Alert.AlertType.INFORMATION);
+        alert.setTitle(title);
+        alert.setHeaderText(null);
+        alert.setContentText(content);
+        alert.showAndWait();
+    }
+
+    private void updateEnrollmentTable(Course course) {
+        // Logic to update the enrollment table based on the selected course
+        // For example, if enrollmentTable is a TableView<Student>, you might do something like this:
+        enrollmentTable.setItems(course.getEnrolledStudents());
+    }
+    
     private void showEnrollStudentDialog() {
         Course selectedCourse = courseTable.getSelectionModel().getSelectedItem();
         if (selectedCourse == null) {
@@ -434,7 +447,7 @@ class CourseEnrollmentTab extends Tab {
                         showAlert("Invalid Input", "Student name cannot be empty.");
                         return null;
                     }
-                    return new Student(id, name, 0, ""); // Age and major are not used here
+                    return new Student(""+id, name, 0, ""); // Age and major are not used here
                 } catch (NumberFormatException e) {
                     showAlert("Invalid Input", "Please enter a valid student ID.");
                     return null;
