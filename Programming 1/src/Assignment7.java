@@ -245,7 +245,7 @@ class StudentManagementTab extends Tab {
     
 }
 
-public class DashboardTab extends Tab {
+class DashboardTab extends Tab {
 
     public DashboardTab() {
         setText("Dashboard");
@@ -305,6 +305,213 @@ public class DashboardTab extends Tab {
     }
 }
 
+class CourseEnrollmentTab extends Tab {
+
+    private TableView<Course> courseTable;
+    private TableView<Student> enrollmentTable;
+    private ObservableList<Course> courseData;
+    private ObservableList<Student> enrollmentData;
+
+    public CourseEnrollmentTab() {
+        setText("Course Enrollment");
+
+        // Initialize the course data list
+        courseData = FXCollections.observableArrayList();
+        enrollmentData = FXCollections.observableArrayList();
+
+        // Create the course table and its columns
+        courseTable = new TableView<>();
+        TableColumn<Course, Number> courseIdColumn = new TableColumn<>("Course ID");
+        courseIdColumn.setCellValueFactory(new PropertyValueFactory<>("id"));
+        TableColumn<Course, String> courseNameColumn = new TableColumn<>("Course Name");
+        courseNameColumn.setCellValueFactory(new PropertyValueFactory<>("name"));
+
+        courseTable.getColumns().addAll(courseIdColumn, courseNameColumn);
+        courseTable.setItems(courseData);
+
+        // Create the enrollment table and its columns
+        enrollmentTable = new TableView<>();
+        TableColumn<Student, Number> studentIdColumn = new TableColumn<>("Student ID");
+        studentIdColumn.setCellValueFactory(new PropertyValueFactory<>("id"));
+        TableColumn<Student, String> studentNameColumn = new TableColumn<>("Student Name");
+        studentNameColumn.setCellValueFactory(new PropertyValueFactory<>("name"));
+
+        enrollmentTable.getColumns().addAll(studentIdColumn, studentNameColumn);
+        enrollmentTable.setItems(enrollmentData);
+
+        // Create buttons and their event handlers
+        Button enrollButton = new Button("Enroll Student");
+        enrollButton.setOnAction(e -> showEnrollStudentDialog());
+
+        // Layout setup
+        HBox buttonBox = new HBox(10, enrollButton);
+        buttonBox.setPadding(new Insets(10));
+
+        VBox courseBox = new VBox(10, new Label("Courses"), courseTable, buttonBox);
+        VBox enrollmentBox = new VBox(10, new Label("Enrolled Students"), enrollmentTable);
+
+        HBox layout = new HBox(20, courseBox, enrollmentBox);
+        layout.setPadding(new Insets(10));
+
+        setContent(layout);
+
+        // Sample data (replace with actual data retrieval logic)
+        loadSampleData();
+    }
+
+    private void loadSampleData() {
+        courseData.addAll(
+                new Course(1, "Mathematics"),
+                new Course(2, "Physics"),
+                new Course(3, "Chemistry")
+        );
+    }
+
+    private void showEnrollStudentDialog() {
+        Course selectedCourse = courseTable.getSelectionModel().getSelectedItem();
+        if (selectedCourse == null) {
+            showAlert("No Course Selected", "Please select a course to enroll a student.");
+            return;
+        }
+
+        Dialog<Student> dialog = new Dialog<>();
+        dialog.setTitle("Enroll Student");
+
+        // Set the button types
+        ButtonType enrollButtonType = new ButtonType("Enroll", ButtonBar.ButtonData.OK_DONE);
+        dialog.getDialogPane().getButtonTypes().addAll(enrollButtonType, ButtonType.CANCEL);
+    
+        // Create the form fields
+        TextField studentIdField = new TextField();
+        studentIdField.setPromptText("Student ID");
+        TextField studentNameField = new TextField();
+        studentNameField.setPromptText("Student Name");
+    
+        VBox form = new VBox(10, new Label("Student ID:"), studentIdField, new Label("Student Name:"), studentNameField);
+        form.setPadding(new Insets(20, 150, 10, 10));
+        dialog.getDialogPane().setContent(form);
+    
+        // Convert the result to a Student object when the Enroll button is clicked
+        dialog.setResultConverter(dialogButton -> {
+            if (dialogButton == enrollButtonType) {
+                try {
+                    int id = Integer.parseInt(studentIdField.getText());
+                    String name = studentNameField.getText();
+                    if (name.isEmpty()) {
+                        showAlert("Invalid Input", "Student name cannot be empty.");
+                        return null;
+                    }
+                    return new Student(id, name, 0, ""); // Age and major are not used here
+                } catch (NumberFormatException e) {
+                    showAlert("Invalid Input", "Please enter a valid student ID.");
+                    return null;
+                }
+            }
+            return null;
+        });
+    
+        dialog.showAndWait().ifPresent(student -> {
+            // Enroll the student in the selected course
+            selectedCourse.enrollStudent(student);
+            updateEnrollmentTable(selectedCourse);
+        });
+    }
+
+    private void validateEnrollButton(Node enrollButton, TextField studentIdField, TextField studentNameField) {
+        boolean disableButton = studentIdField.getText().isEmpty() || studentNameField.getText().isEmpty();
+        enrollButton.setDisable(disableButton);
+    }
+}
+
+class GradeManagementTab extends Tab {
+
+    private TableView<Student> studentTable;
+    private ComboBox<Course> courseComboBox;
+    private TextField gradeField;
+    private ObservableList<Student> studentData;
+    private ObservableList<Course> courseData;
+
+    public GradeManagementTab() {
+        setText("Grade Management");
+
+        // Initialize the student and course data lists
+        studentData = FXCollections.observableArrayList();
+        courseData = FXCollections.observableArrayList();
+
+        // Create the student table and its columns
+        studentTable = new TableView<>();
+        TableColumn<Student, Number> studentIdColumn = new TableColumn<>("Student ID");
+        studentIdColumn.setCellValueFactory(new PropertyValueFactory<>("id"));
+        TableColumn<Student, String> studentNameColumn = new TableColumn<>("Student Name");
+        studentNameColumn.setCellValueFactory(new PropertyValueFactory<>("name"));
+
+        studentTable.getColumns().addAll(studentIdColumn, studentNameColumn);
+        studentTable.setItems(studentData);
+
+        // Create the course combo box
+        courseComboBox = new ComboBox<>();
+        courseComboBox.setPromptText("Select Course");
+
+        // Create the grade input field
+        gradeField = new TextField();
+        gradeField.setPromptText("Grade");
+
+        // Create the assign grade button and its event handler
+        Button assignGradeButton = new Button("Assign Grade");
+        assignGradeButton.setOnAction(e -> assignGrade());
+
+        // Layout setup
+        HBox inputBox = new HBox(10, courseComboBox, gradeField, assignGradeButton);
+        inputBox.setPadding(new Insets(10));
+
+        VBox layout = new VBox(10, new Label("Students"), studentTable, new Label("Assign Grade"), inputBox);
+        layout.setPadding(new Insets(10));
+
+        setContent(layout);
+
+        // Sample data (replace with actual data retrieval logic)
+        loadSampleData();
+    }
+
+    private void loadSampleData() {
+        studentData.addAll(
+                new Student(1, "John Doe", 0, ""),
+                new Student(2, "Jane Smith", 0, ""),
+                new Student(3, "Alice Johnson", 0, "")
+        );
+
+        courseData.addAll(
+                new Course(1, "Mathematics"),
+                new Course(2, "Physics"),
+                new Course(3, "Chemistry")
+        );
+
+        courseComboBox.setItems(courseData);
+    }
+
+    private void assignGrade() {
+        Student selectedStudent = studentTable.getSelectionModel().getSelectedItem();
+        Course selectedCourse = courseComboBox.getValue();
+        String grade = gradeField.getText();
+
+        if (selectedStudent == null || selectedCourse == null || grade.isEmpty()) {
+            showAlert("Incomplete Information", "Please select a student, course, and enter a grade.");
+            return;
+        }
+
+        // Perform grade assignment logic here (e.g., update student's grade for the selected course)
+        showAlert("Grade Assigned", "Grade assigned to student " + selectedStudent.getName() +
+                " for course " + selectedCourse.getName() + ": " + grade);
+    }
+
+    private void showAlert(String title, String content) {
+        Alert alert = new Alert(Alert.AlertType.INFORMATION);
+        alert.setTitle(title);
+        alert.setHeaderText(null);
+        alert.setContentText(content);
+        alert.showAndWait();
+    }
+}
 
 public class Assignment7 extends Application {
     @Override
