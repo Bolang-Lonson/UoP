@@ -1,4 +1,6 @@
+import javafx.beans.property.*;
 import javafx.application.Application;
+import javafx.scene.Node;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
 import javafx.application.Platform;
@@ -81,6 +83,37 @@ class Student {
     }
 }
 
+class Course {
+    private int id;
+    private String name;
+    private ObservableList<Student> enrolledStudents;
+
+    public Course(int id, String name) {
+        this.id = id;
+        this.name = name;
+        this.enrolledStudents = FXCollections.observableArrayList();
+    }
+
+    public int getId() {
+        return id;
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public ObservableList<Student> getEnrolledStudents() {
+        return enrolledStudents;
+    }
+
+    public void enrollStudent(Student student) {
+        enrolledStudents.add(student);
+    }
+
+    // Other methods for managing courses, such as removing students or updating details, can be added here
+}
+
+
 class StudentManagementTab extends Tab {
 
     private TableView<Student> studentTable;
@@ -157,7 +190,7 @@ class StudentManagementTab extends Tab {
                         showAlert("Invalid Input", "Name and Major cannot be empty.");
                         return null;
                     }
-                    return new Student(studentData.size() + 1, name, age, major);
+                    return new Student(("" + studentData.size() + 1), name, age, major);
                 } catch (NumberFormatException e) {
                     showAlert("Invalid Input", "Please enter a valid age.");
                     return null;
