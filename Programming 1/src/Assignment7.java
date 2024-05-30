@@ -10,6 +10,13 @@ import javafx.scene.control.Label;
 import javafx.scene.control.TabPane;
 import javafx.scene.control.Button;
 import javafx.scene.text.Font;
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
+import javafx.geometry.Insets;
+import javafx.scene.control.*;
+import javafx.scene.control.cell.PropertyValueFactory;
+import javafx.scene.control.Tab;
+import javafx.scene.layout.GridPane;
 
 class Student {
     private StringProperty id;
@@ -237,6 +244,67 @@ class StudentManagementTab extends Tab {
     }
     
 }
+
+public class DashboardTab extends Tab {
+
+    public DashboardTab() {
+        setText("Dashboard");
+
+        // Create a layout for the dashboard
+        VBox layout = new VBox(20);
+        layout.setPadding(new Insets(10));
+
+        // Create labels for summary statistics
+        Label totalStudentsLabel = new Label("Total Students: 0");
+        Label totalCoursesLabel = new Label("Total Courses: 0");
+        Label totalEnrollmentsLabel = new Label("Total Enrollments: 0");
+
+        // Create buttons to navigate to different sections
+        Button manageStudentsButton = new Button("Manage Students");
+        Button manageCoursesButton = new Button("Manage Courses");
+        Button manageGradesButton = new Button("Manage Grades");
+
+        // Event handlers for buttons (assuming you have methods to handle these actions)
+        manageStudentsButton.setOnAction(e -> openManageStudentsTab());
+        manageCoursesButton.setOnAction(e -> openManageCoursesTab());
+        manageGradesButton.setOnAction(e -> openManageGradesTab());
+
+        // Add elements to the layout
+        layout.getChildren().addAll(
+                new Label("Dashboard Overview"),
+                totalStudentsLabel,
+                totalCoursesLabel,
+                totalEnrollmentsLabel,
+                manageStudentsButton,
+                manageCoursesButton,
+                manageGradesButton
+        );
+
+        setContent(layout);
+    }
+
+    // Placeholder methods for opening tabs
+    private void openManageStudentsTab() {
+        // Logic to switch to the Manage Students tab
+    }
+
+    private void openManageCoursesTab() {
+        // Logic to switch to the Manage Courses tab
+    }
+
+    private void openManageGradesTab() {
+        // Logic to switch to the Manage Grades tab
+    }
+
+    // Method to update dashboard statistics (to be called from main app)
+    public void updateStatistics(int totalStudents, int totalCourses, int totalEnrollments) {
+        // Updating the labels with the latest statistics
+        ((Label)((VBox) getContent()).getChildren().get(1)).setText("Total Students: " + totalStudents);
+        ((Label)((VBox) getContent()).getChildren().get(2)).setText("Total Courses: " + totalCourses);
+        ((Label)((VBox) getContent()).getChildren().get(3)).setText("Total Enrollments: " + totalEnrollments);
+    }
+}
+
 
 public class Assignment7 extends Application {
     @Override
