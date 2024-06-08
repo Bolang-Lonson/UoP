@@ -38,12 +38,13 @@ class CircleInfo {
 
 public class CircleGame {
     public static void main(String[] args) {
-        private CircleInfo[] circleData;    // holds the data for all 100 circles
+        CircleInfo[] circleData;    // holds the data for all 100 circles
         circleData = new CircleInfo[100]; // create the array
+        Graphics g = new Graphics();
         for (int i = 0; i < circleData.length; i++) { // create the objects
             circleData[i] = new CircleInfo(
-                                    (int)(width*Math.random()),
-                                    (int)(height*Math.random()),
+                                    (int)(100*Math.random()),
+                                    (int)(100*Math.random()),
                                     (int)(100*Math.random())
                                 );
             

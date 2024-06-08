@@ -13,13 +13,16 @@ public class Assignment5 {
 /**
  * Student Class: Stores student information and provides methods to enroll in courses and assign grades.
  * Student class can be used to create Student objects with various attributes
- * @params: name, id
   */
 class Student {
     private String name, id;
     private ArrayList<Course> enrolledCourses;
     private HashMap<Course, String> grades = new HashMap<Course, String>();
 
+    /**
+     * @param name
+     * @param id
+     */
     public Student(String name, String id) {
         this.name = name;
         this.id = id;
@@ -129,6 +132,7 @@ class CourseManagement {
             // implement averaging logic for grades here.
             // grading system not explicitly given or known
         }
+        return "A";
     }
 
     public static String overallCourseGrade(String courseCode) {
@@ -140,6 +144,7 @@ class CourseManagement {
                 }
             }
         }
+        return "B";
     }
 
     /**
@@ -152,7 +157,7 @@ class CourseManagement {
             System.out.println("Course Enrollment and Grade Management System");
             System.out.println("1.\tAdd New Course\n2.\tEnroll Student\n3.\tAssign Grades\n4.\tCalculate Overall Grades\n5.\tExit");
 
-            System.out.print("Enter you option");
+            System.out.println("Enter you option:");
 
             // using TextIO's in-built error handling system
             option = TextIO.getlnInt();
