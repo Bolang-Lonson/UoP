@@ -3,7 +3,7 @@ import java.util.stream.*;
 
 public class StreamAPI {
     public static void main(String[] args) {
-        ArrayList<String> stringlList = new ArrayList<>();
+        ArrayList<String> stringList = new ArrayList<>();
 
         // using a parallel stream to compute the average length of strings in the arraylist
         int lengthSum = stringList.parallelStream()
